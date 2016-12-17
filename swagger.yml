@@ -162,6 +162,9 @@ definitions:
       torrent_name:
         type: string
         description: Torrent name
+      num_peers:
+        type: integer
+        description: The number of peers
   Error:
     type: object
     properties:
