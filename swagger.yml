@@ -39,6 +39,17 @@ securityDefinitions:
     description: HTTP Basic Authentication. Works over `HTTP` and `HTTPS`
 
 ################################################################################
+#                                   Parameters                                 #
+################################################################################
+parameters:
+  torrent_hash:
+    name: torrent_hash
+    in: path
+    description: The torrent hash
+    type: string
+    required: true
+
+################################################################################
 #                                           Paths                              #
 ################################################################################
 paths:
@@ -48,13 +59,7 @@ paths:
        - basicAuth: []
       summary: Torrents
       description: |
-        The Torrents endpoint returns a list of torrents based on the query
-      parameters:
-        - name: torrent_hash
-          in: query
-          description: torrent_hash.
-          required: true
-          type: string
+        The Torrents endpoint returns a list of torrents
       responses:
         200:
           description: An array of torrent_hash
@@ -62,6 +67,27 @@ paths:
             type: array
             items:
               $ref: '#/definitions/Torrent'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+  /torrents/{torrent_hash}:
+    parameters:
+    - $ref: '#/parameters/torrent_hash'
+    get:
+      security:
+       - basicAuth: []
+      summary: Torrents
+      description: |
+        The Torrents endpoint returns a torrent based on the query
+      responses:
+        200:
+          description: Torrent
+          schema:
+            type: object
+            properties:
+              torrent:
+                $ref: '#/definitions/Torrent'
         default:
           description: Unexpected error
           schema:
