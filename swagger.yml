@@ -71,6 +71,26 @@ paths:
           description: Unexpected error
           schema:
             $ref: '#/definitions/Error'
+    post:
+      parameters:
+       - name: torrent
+         in: body
+         description: the new torrent to declare
+         required: true
+         schema:
+           $ref: '#/definitions/Torrent'
+      security:
+       - basicAuth: []
+      summary: Torrents
+      description: |
+        Declare a new torrent
+      responses:
+        200:
+          description: ok
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
   /torrents/{torrent_hash}:
     parameters:
     - $ref: '#/parameters/torrent_hash'
@@ -103,7 +123,9 @@ definitions:
       torrent_hash:
         type: string
         description: Unique hash representing the torrent
-
+      torrent_name:
+        type: string
+        description: Torrent name
   Error:
     type: object
     properties:
