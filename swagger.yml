@@ -128,6 +128,27 @@ paths:
           schema:
             $ref: '#/definitions/Error'
 
+    put:
+      parameters:
+       - name: torrent
+         in: body
+         description: The modified torrent
+         required: true
+         schema:
+           $ref: '#/definitions/Torrent'
+      security:
+       - basicAuth: []
+      summary: Torrents
+      description: |
+        Modify an existing torrent. Require to be the initial seeder
+      responses:
+        200:
+          description: ok
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+
 ################################################################################
 #                                     Definitions                              #
 ################################################################################
