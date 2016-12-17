@@ -91,6 +91,7 @@ paths:
           description: Unexpected error
           schema:
             $ref: '#/definitions/Error'
+
   /torrents/{torrent_hash}:
     parameters:
     - $ref: '#/parameters/torrent_hash'
@@ -108,6 +109,20 @@ paths:
             properties:
               torrent:
                 $ref: '#/definitions/Torrent'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+
+    delete:
+      security:
+       - basicAuth: []
+      summary: Torrents
+      description: |
+        Notify torrent not being seeded by connected user
+      responses:
+        200:
+          description: ok
         default:
           description: Unexpected error
           schema:
