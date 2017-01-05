@@ -52,8 +52,18 @@ server.listen(8000, 'localhost')
 
 server.on('start', function (addr) {
   console.log('got start message from ' + addr)
+  console.log(Object.keys(server.torrents));
 })
 
-server.on('complete', function (addr) {})
-server.on('update', function (addr) {})
-server.on('stop', function (addr) {})
+server.on('complete', function (addr) {
+  console.log('got complete message from ' + addr)
+  console.log(Object.keys(server.torrents));
+})
+server.on('update', function (addr) {
+  console.log('got update message from ' + addr)
+  console.log(Object.keys(server.torrents));
+})
+server.on('stop', function (addr) {
+  console.log('got stop message from ' + addr)
+  console.log(Object.keys(server.torrents));
+})
