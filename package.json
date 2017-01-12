@@ -5,7 +5,8 @@
   "main": "tracker.js",
   "scripts": {
     "build": "babel src -s -D -d dist --presets es2015,stage-0",
-    "start": "node dist"
+    "start": "node dist",
+    "buildDocker": "npm run build && docker build -t p-monitor ."
   },
   "repository": {
     "type": "git",
