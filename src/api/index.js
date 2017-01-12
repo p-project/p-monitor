@@ -5,7 +5,7 @@ let server = app.listen(3000, '0.0.0.0', function () {
   host = (host === '::' ? 'localhost' : host)
   let port = server.address().port
 
-  console.log('listening at http://%s:%s', host, port)
+  console.log('[API] listening at http://%s:%s', host, port)
 })
 
 export default app

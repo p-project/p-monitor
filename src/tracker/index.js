@@ -41,8 +41,8 @@ server.on('warning', function (err) {
 
 server.on('listening', function () {
   // fired when all requested servers are listening
-  console.log('listening on http port:' + server.http.address().port)
-  console.log('listening on udp port:' + server.udp.address().port)
+  console.log('[Tracker] listening on http port:' + server.http.address().port)
+  console.log('[Tracker] listening on udp port:' + server.udp.address().port)
 })
 
 // start tracker server listening! Use 0 to listen on a random free port.
@@ -51,19 +51,19 @@ server.listen(8000, 'localhost')
 // listen for individual tracker messages from peers:
 
 server.on('start', function (addr) {
-  console.log('got start message from ' + addr)
+  console.log('[Tracker] got start message from ' + addr)
   console.log(Object.keys(server.torrents))
 })
 
 server.on('complete', function (addr) {
-  console.log('got complete message from ' + addr)
+  console.log('[Tracker] got complete message from ' + addr)
   console.log(Object.keys(server.torrents))
 })
 server.on('update', function (addr) {
-  console.log('got update message from ' + addr)
+  console.log('[Tracker] got update message from ' + addr)
   console.log(Object.keys(server.torrents))
 })
 server.on('stop', function (addr) {
-  console.log('got stop message from ' + addr)
+  console.log('[Tracker] got stop message from ' + addr)
   console.log(Object.keys(server.torrents))
 })
