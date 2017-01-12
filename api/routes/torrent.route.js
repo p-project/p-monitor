@@ -1,11 +1,10 @@
-import express from 'express';
+import express from 'express'
 
-const router = express.Router();
+const router = express.Router()
 
 router.get('/lul', function (req, res, next) {
   console.log('kek')
   res.send({ ok: 'lul' })
-});
+})
 
-
-export default router;
+export default router
