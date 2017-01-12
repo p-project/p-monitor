@@ -53,17 +53,22 @@ server.listen(8000, 'localhost')
 server.on('start', function (addr) {
   console.log('[Tracker] got start message from ' + addr)
   console.log(Object.keys(server.torrents))
+  console.log(JSON.stringify(server.torrents[Object.keys(server.torrents)[0]]))
 })
 
 server.on('complete', function (addr) {
   console.log('[Tracker] got complete message from ' + addr)
   console.log(Object.keys(server.torrents))
+  console.log(JSON.stringify(server.torrents[Object.keys(server.torrents)[0]]))
 })
+
 server.on('update', function (addr) {
   console.log('[Tracker] got update message from ' + addr)
   console.log(Object.keys(server.torrents))
+  console.log(JSON.stringify(server.torrents[Object.keys(server.torrents)[0]]))
 })
 server.on('stop', function (addr) {
   console.log('[Tracker] got stop message from ' + addr)
   console.log(Object.keys(server.torrents))
+  console.log(JSON.stringify(server.torrents[Object.keys(server.torrents)[0]]))
 })
