@@ -1,10 +1,12 @@
 import express from 'express'
+import validate from 'express-validation'
+
+import * as torrentCtrl from '../controllers/torrent.controller'
 
 const router = express.Router()
 
-router.post('/getSeedTorrent', function (req, res, next) {
-  console.log('getSeedTorrent')
-  res.send({ hashInfo: 'b7d5c3a66218c1f334d8c6467a589e864c7716b1' })
-})
+/** POST /api/getSeedTorrent - Returns the torrent hashInfo to seed */
+router.route('/getSeedTorrent')
+  .post(validate({}), torrentCtrl.getSeedTorrent)
 
 export default router
