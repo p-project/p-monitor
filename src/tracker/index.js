@@ -1,6 +1,6 @@
-var Server = require('bittorrent-tracker').Server
+var TrackerServer = require('bittorrent-tracker').Server
 
-var server = new Server({
+var trackerServer = new TrackerServer({
   udp: true, // enable udp server? [default=true]
   http: true, // enable http server? [default=true]
   ws: true, // enable websocket server? [default=true]
@@ -24,51 +24,42 @@ var server = new Server({
   }
 })
 
-// Internal http, udp, and websocket servers exposed as public properties.
-server.http
-server.udp
-server.ws
-
-server.on('error', function (err) {
+trackerServer.on('error', function (err) {
   // fatal server error!
   console.log(err.message)
 })
 
-server.on('warning', function (err) {
+trackerServer.on('warning', function (err) {
   // client sent bad data. probably not a problem, just a buggy client.
   console.log(err.message)
 })
 
-server.on('listening', function () {
+trackerServer.on('listening', function () {
   // fired when all requested servers are listening
-  console.log('[Tracker] listening on http port:' + server.http.address().port)
-  console.log('[Tracker] listening on udp port:' + server.udp.address().port)
+  console.log('[Tracker] listening on http port:' + trackerServer.http.address().port)
+  console.log('[Tracker] listening on udp port:' + trackerServer.udp.address().port)
 })
 
 // start tracker server listening! Use 0 to listen on a random free port.
-server.listen(8000, 'localhost')
+trackerServer.listen(8000, 'localhost')
 
 // listen for individual tracker messages from peers:
 
-server.on('start', function (addr) {
+trackerServer.on('start', function (addr) {
   console.log('[Tracker] got start message from ' + addr)
-  console.log(Object.keys(server.torrents))
-  console.log(JSON.stringify(server.torrents[Object.keys(server.torrents)[0]]))
+  console.log(Object.keys(trackerServer.torrents))
 })
 
-server.on('complete', function (addr) {
+trackerServer.on('complete', function (addr) {
   console.log('[Tracker] got complete message from ' + addr)
-  console.log(Object.keys(server.torrents))
-  console.log(JSON.stringify(server.torrents[Object.keys(server.torrents)[0]]))
+  console.log(Object.keys(trackerServer.torrents))
 })
 
-server.on('update', function (addr) {
+trackerServer.on('update', function (addr) {
   console.log('[Tracker] got update message from ' + addr)
-  console.log(Object.keys(server.torrents))
-  console.log(JSON.stringify(server.torrents[Object.keys(server.torrents)[0]]))
+  console.log(Object.keys(trackerServer.torrents))
 })
-server.on('stop', function (addr) {
+trackerServer.on('stop', function (addr) {
   console.log('[Tracker] got stop message from ' + addr)
-  console.log(Object.keys(server.torrents))
-  console.log(JSON.stringify(server.torrents[Object.keys(server.torrents)[0]]))
+  console.log(Object.keys(trackerServer.torrents))
 })
