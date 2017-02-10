@@ -12,7 +12,7 @@ RUN npm install
 # Bundle app source
 COPY ./dist /home/p-monitor/dist
 
-EXPOSE 3000
+EXPOSE 3001
 EXPOSE 8000
 
 CMD [ "npm", "run", "start" ]
