@@ -6,7 +6,8 @@
   "scripts": {
     "build": "babel src -s -D -d dist --presets es2015,stage-0",
     "start": "node dist",
-    "buildDocker": "npm run build && docker build -t p-monitor ."
+    "buildDocker": "npm run build && docker build -t p-monitor .",
+    "lint": "eslint src"
   },
   "repository": {
     "type": "git",
@@ -20,7 +21,8 @@
     "express": "^4.14.0",
     "express-validation": "^1.0.1",
     "helmet": "^3.3.0",
-    "joi": "^10.1.0"
+    "joi": "^10.1.0",
+    "ws": "^2.2.3"
   },
   "devDependencies": {
     "babel": "^6.5.2",

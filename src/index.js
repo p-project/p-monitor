@@ -1,2 +1,3 @@
-import tracker from './tracker'
-import api from './api'
+require('./tracker')
+require('./api')
+require('./ws')
