@@ -51,6 +51,12 @@ wss.on('connection', function connection (ws) {
           addSeeder(message.hashInfo, ws.peerId)
           ws.seeds.push(message.hashInfo)
           break
+        case 'remove':
+          ws.seeds = ws.seeds.filter(function (i) {
+            return i !== message.hashInfo
+          })
+          removeSeeder(message.hashInfo, ws.peerId)
+          break
         default:
           console.log('not such endpoint:' + message.endpoint)
           ws.close()
