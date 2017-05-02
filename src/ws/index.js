@@ -18,6 +18,20 @@ function addSeeder (hashInfo, peerId) {
   }
 }
 
+function removeSeeder (hashInfo, peerId) {
+  let seederList = seedList[hashInfo]
+  if (seederList) {
+    seederList = seederList.filter(function (i) {
+      return i !== peerId
+    })
+    if (seederList.length === 0) {
+      seedList.delete(hashInfo)
+    } else {
+      seedList[hashInfo] = seederList
+    }
+  }
+}
+
 wss.on('connection', function connection (ws) {
   ws.on('message', function incoming (message) {
     try {
@@ -26,6 +40,7 @@ wss.on('connection', function connection (ws) {
       switch (req.endpoint) {
         case 'register':
           ws.peerId = req.peerId
+          ws.seeds = []
           break
         case 'seeding':
           if (ws.peerId === undefined) {
@@ -34,6 +49,7 @@ wss.on('connection', function connection (ws) {
           }
           console.log('seeding')
           addSeeder(message.hashInfo, ws.peerId)
+          ws.seeds.push(message.hashInfo)
           break
         default:
           console.log('not such endpoint:' + message.endpoint)
@@ -48,7 +64,8 @@ wss.on('connection', function connection (ws) {
 
   ws.on('close', function incoming (message) {
     console.log('closed')
+    ws.seeds.forEach((hashInfo) => {
+      removeSeeder(hashInfo, ws.peerId)
+    })
   })
-
-  ws.send('something')
 })
