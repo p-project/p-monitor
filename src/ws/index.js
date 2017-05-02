@@ -3,6 +3,21 @@ import WebSocket from 'ws'
 const wss = new WebSocket.Server({ port: 7894, clientTracking: true })
 console.log('[ws] listening at 7894')
 
+const seedList = new Map()
+
+function addSeeder (hashInfo, peerId) {
+  let seederList = seedList[hashInfo]
+  if (seederList) {
+    seederList = seederList.filter(function (i) {
+      return i !== peerId
+    })
+    seederList.push(peerId)
+    seedList[hashInfo] = seederList
+  } else {
+    seedList[hashInfo] = [peerId]
+  }
+}
+
 wss.on('connection', function connection (ws) {
   ws.on('message', function incoming (message) {
     try {
@@ -15,8 +30,10 @@ wss.on('connection', function connection (ws) {
         case 'seeding':
           if (ws.peerId === undefined) {
             ws.close()
+            break
           }
           console.log('seeding')
+          addSeeder(message.hashInfo, ws.peerId)
           break
         default:
           console.log('not such endpoint:' + message.endpoint)
