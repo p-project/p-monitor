@@ -48,21 +48,21 @@ wss.on('connection', function connection (ws) {
             break
           }
           console.log('seeding')
-          addSeeder(message.hashInfo, ws.peerId)
-          ws.seeds.push(message.hashInfo)
+          addSeeder(req.hashInfo, ws.peerId)
+          ws.seeds.push(req.hashInfo)
           break
         case 'remove':
           ws.seeds = ws.seeds.filter(function (i) {
-            return i !== message.hashInfo
+            return i !== req.hashInfo
           })
-          removeSeeder(message.hashInfo, ws.peerId)
+          removeSeeder(req.hashInfo, ws.peerId)
           break
         default:
-          console.log('not such endpoint:' + message.endpoint)
+          console.log('not such endpoint:' + req.endpoint)
           ws.close()
       }
 
-      console.log('received: %s', message)
+      console.log('received: %s', req)
     } catch (e) {
       ws.close()
     }
@@ -75,3 +75,5 @@ wss.on('connection', function connection (ws) {
     })
   })
 })
+
+export default seedList
