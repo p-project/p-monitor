@@ -76,4 +76,4 @@ wss.on('connection', function connection (ws) {
   })
 })
 
-export default seedList
+export { seedList }
