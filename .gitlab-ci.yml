@@ -1,6 +1,0 @@
-image: node:latest
-
-lint:
-  script:
-    - npm i
-    - npm run lint
