@@ -34,28 +34,40 @@ function removeSeeder (hashInfo, peerId) {
 
 wss.on('connection', function connection (ws) {
   ws.on('message', function incoming (message) {
+    function register (ws, req) {
+      ws.peerId = req.peerId
+      ws.seeds = []
+    }
+
+    function seeding (ws, req) {
+      if (ws.peerId === undefined) {
+        ws.close()
+        return
+      }
+      console.log('seeding')
+      addSeeder(req.hashInfo, ws.peerId)
+      ws.seeds.push(req.hashInfo)
+    }
+
+    function remove (ws, req) {
+      ws.seeds = ws.seeds.filter(function (i) {
+        return i !== req.hashInfo
+      })
+      removeSeeder(req.hashInfo, ws.peerId)
+    }
+
     try {
       const req = JSON.parse(message)
 
       switch (req.endpoint) {
         case 'register':
-          ws.peerId = req.peerId
-          ws.seeds = []
+          register(ws, req)
           break
         case 'seeding':
-          if (ws.peerId === undefined) {
-            ws.close()
-            break
-          }
-          console.log('seeding')
-          addSeeder(req.hashInfo, ws.peerId)
-          ws.seeds.push(req.hashInfo)
+          seeding(ws, req)
           break
         case 'remove':
-          ws.seeds = ws.seeds.filter(function (i) {
-            return i !== req.hashInfo
-          })
-          removeSeeder(req.hashInfo, ws.peerId)
+          remove(ws, req)
           break
         default:
           console.log('not such endpoint:' + req.endpoint)
