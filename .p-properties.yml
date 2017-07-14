@@ -1,0 +1,9 @@
+dependencies:
+  bin:
+    - git
+    - node
+    - npm
+    - yarn
+install:
+  - yarn
+  - npm run build
